@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.mango3y.springstudy.dao.UserDAO">
+    <resultMap id="userResultMap" type="User">
+    <!-- 其它java属性名和数据库表列名一样的可以省略不写 -->
+        <result property="registerTime" column="register_time"/>
+    </resultMap>
+    
+    <!-- <select id="queryUsers" resultType="User">-->
+    <!-- 如果有设置resultMap标签的话就要使用resultMap指定, 而不再用resultType -->
+    <select id="queryUsers" resultMap="userResultMap">
+        select id, username, password, gender, register_time
+        from t_user
+    </select>
+
+    <delete id="deleteUser" parameterType="int">
+        delete from t_user
+        where id=#{id}
+    </delete>
+
+    <update id="updateUser" parameterType="User">
+        update t_user
+        set username=#{username}, password=#{password}, gender=#{gender}, register_time=#{registerTime}
+        where id=#{id}
+    </update>
+
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        <!-- 主键回填，将新数据的ID，存入java对象的和主键对应的属性中 -->
+        <!--
+        <selectKey>标签的参数详解:
+            keyProperty: users对象的哪个属性来接收返回的主键值
+            resultType:返回的主键的类型
+            Order:指定生成返回主键的时机：AFTER：先插入再返回主键
+                                      BEFORE: 先生成再完成插入
+        -->
+<!--        <selectKey order="AFTER" resultType="int" keyProperty="id">-->
+<!--            select last_insert_id()-->
+<!--        </selectKey>-->
+        insert into t_user values(null, #{username}, #{password}, #{gender}, #{registerTime})
+    </insert>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 目标：原始业务 -->
+    <bean id="userService" class="cn.mango3y.springstudy.spring02.service.UserServiceImpl"/>
+    <!-- 通知：辅助功能 -->
+    <bean id="myAdvice" class="cn.mango3y.springstudy.spring02.advice.MyAdvice"/>
+
+    <!-- 编织，需要引入aop的schema -->
+    <aop:config>
+        <!-- 切入点，是要插入辅助功能的方法，需要用“修饰符、返回值、包.类、方法名、参数表”去定位一个方法 -->
+        <!-- 表达式还有很多写法 -->
+        <aop:pointcut id="pc_shine" expression="execution(* queryUsers())"/>
+
+        <!-- 切入点声明必须在组装之前进行，否则标签报错 -->
+        <!-- 匹配参数 -->
+        <aop:pointcut id="myPointCut1" expression="execution(* *(cn.mango3y.springstudy.spring02.entity.User))"/>
+        <!-- 匹配方法名（无参） -->
+        <aop:pointcut id="myPointCut2" expression="execution(* save())"/>
+        <!-- 匹配所有无参方法 -->
+        <aop:pointcut id="myPointCut21" expression="execution(* *())"/>
+        <!-- 匹配参数列表任意的save方法 -->
+        <aop:pointcut id="myPointCut22" expression="execution(* save(..))"/>
+        <!-- 匹配返回值类型 -->
+        <aop:pointcut id="myPointCut3" expression="execution(cn.mango3y.springstudy.spring02.entity.User *(..))"/>
+        <!-- 匹配类名 -->
+        <aop:pointcut id="myPointCut4" expression="execution(* cn.mango3y.springstudy.spring02.service.UserServiceImpl.*(..))"/>
+        <!-- 匹配包名 -->
+        <aop:pointcut id="myPointCut5" expression="execution(* cn.mango3y.springstudy.spring02.service.*.*(..))"/>
+        <!-- 匹配包名以及子包名 -->
+        <aop:pointcut id="myPointCut6" expression="execution(* cn.mango3y.springstudy.spring02..*.*(..))"/>
+
+
+
+
+        <!-- 将对应通知组装到切入点 -->
+        <aop:advisor advice-ref="myAdvice" pointcut-ref="pc_shine"/>
+
+
+    </aop:config>
+</beans>

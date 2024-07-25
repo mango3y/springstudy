@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="address" class="cn.mango3y.springstudy.spring01.entity.Address" init-method="init_address" destroy-method="destroy_address" scope="prototype">
+        <!-- 对于多例的bean，启动工厂并不会创建对象，而是使用工厂getBean的时候才创建 -->
+        <property name="id" value="1"/>
+        <property name="city" value="bj"/>
+    </bean>
+</beans>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 要工厂生产的对象 -->
+    <bean id="userDAO" class="cn.mango3y.springstudy.spring01.dao.UserDAOImpl"/>
+    <bean id="userDAO2" class="cn.mango3y.springstudy.spring01.dao.AnotherUserDAOImpl"/>
+<!--    <bean id="userService" class="service.cn.mango3y.springstudy.spring01.service.UserServiceImpl">-->
+<!--        &lt;!&ndash; userDAO属性赋值，值是id为userDAO的一个bean &ndash;&gt;-->
+<!--        &lt;!&ndash; IoC思想，由Spring工厂将id为userDAO的bean注入userService的名为userDAO的属性 &ndash;&gt;-->
+<!--        <property name="userDAO" ref="userDAO"/>-->
+<!--        &lt;!&ndash; 通过更换ref指定UserServiceImpl中属性userDAO的实现类 &ndash;&gt;-->
+<!--    </bean>-->
+
+    <!-- 自动注入 -->
+    <!-- 为UserServiceImp1中的属性基于类型自动注入值 -->
+    <!-- 此处报错，因为UserDAO类型的bean在工厂中有两个！所以无法用这个方法 -->
+<!--    <bean id="userService2" class="service.cn.mango3y.springstudy.spring01.service.UserServiceImpl" autowire="byType"/>-->
+    <!-- 为UserServiceImp1中的属性基于名称自动注入值 -->
+    <!-- 因为UserServiceImpl中的UserDAO属性名为userDAO所以它可以确定是注入id为userDAO的bean -->
+    <!-- 如果换位userDAO2也是如此，换了个bean注入 -->
+    <bean id="userService3" class="cn.mango3y.springstudy.spring01.service.UserServiceImpl" autowire="byName"/>
+
+    <bean id="address1" class="cn.mango3y.springstudy.spring01.entity.Address">
+        <property name="id" value="1"/>
+        <property name="city" value="北京"/>
+    </bean>
+    <bean id="address2" class="cn.mango3y.springstudy.spring01.entity.Address">
+        <property name="id" value="2"/>
+        <property name="city" value="上海"/>
+    </bean>
+    <bean id="user" class="cn.mango3y.springstudy.spring01.entity.User">
+        <!-- 简单:jdk8种基本数据类型 String Date -->
+        <property name="id" value="10"/>
+        <property name="password" value="123abc"/>
+        <property name="sex" value="male"/>
+        <property name="age" value="20"/>
+        <!-- 日期赋值固定格式 -->
+        <property name="bornDate" value="2003/02/02 00:00:00"/>
+        <!-- 数组 -->
+        <property name="hobbys">
+            <array>
+                <value>football</value>
+                <value>basketball</value>
+                <value>dancing</value>
+            </array>
+        </property>
+        <!-- 集合 -->
+        <property name="phones">
+            <set>
+                <value>13974839283</value>
+                <value>17283927262</value>
+            </set>
+        </property>
+        <!-- 列表 -->
+        <property name="names">
+            <list>
+                <value>tom</value>
+                <value>jack</value>
+            </list>
+        </property>
+        <!-- Map -->
+        <property name="countries">
+            <map>
+                <entry key="zh" value="china"/>
+                <entry key="en" value="england"/>
+            </map>
+        </property>
+        <!-- Properties -->
+        <property name="files">
+            <props>
+                <prop key="url">jdbc:mysql:xxx</prop>
+                <prop key="username">root</prop>
+            </props>
+        </property>
+        <!-- 自建类型 -->
+        <property name="address" ref="address1"/>
+        <!-- 自建类型数组 -->
+        <property name="addresses">
+            <array>
+                <ref bean="address1"/>
+                <ref bean="address2"/>
+            </array>
+        </property>
+        <!-- 自建类型列表 -->
+        <property name="addressList">
+            <list>
+                <ref bean="address1"/>
+                <ref bean="address2"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="student" class="cn.mango3y.springstudy.spring01.entity.Student">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="name" value="shine"/>
+        <constructor-arg name="sex" value="female"/>
+        <constructor-arg name="age" value="20"/>
+    </bean>
+</beans>
