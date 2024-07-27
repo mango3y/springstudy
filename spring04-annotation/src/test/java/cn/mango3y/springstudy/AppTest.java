@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -23,4 +24,10 @@ public class AppTest {
         userService.updateUser(user);
     }
 
+    @Test
+    public void testAOP() throws SQLException {
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+        UserService userService = (UserService)context.getBean("userService");
+        userService.deleteUser(1);
+    }
 }

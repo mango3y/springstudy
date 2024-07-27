@@ -13,26 +13,26 @@ public class MyAspect {
     @Pointcut("execution(* cn.mango3y.springstudy.service.UserServiceImpl.*(..))")
     public void pc(){}
 
-    @Before("pc()") //前置通知
-    public void mybefore(JoinPoint a){
-        System.out.println("target:" + a.getTarget());
-        System.out.println("args:" + a.getArgs());
-        System.out.println("method's name:" + a.getSignature().getName());
-        System.out.println("before~~~~");
-    }
+//    @Before("pc()") //前置通知
+//    public void mybefore(JoinPoint a){
+//        System.out.println("target:" + a.getTarget());
+//        System.out.println("args:" + a.getArgs());
+//        System.out.println("method's name:" + a.getSignature().getName());
+//        System.out.println("before~~~~");
+//    }
 
-    @AfterReturning(value = "pc()", returning = "ret") //后置通知
-    public void myAfterReturning(JoinPoint a, Object ret){
-        System.out.println("after~~~~:" + ret);
-    }
+//    @AfterReturning(value = "pc()", returning = "ret") //后置通知
+//    public void myAfterReturning(JoinPoint a, Object ret){
+//        System.out.println("after~~~~:" + ret);
+//    }
 
-    @Around("pc()") //环绕通知
-    public Object myInterceptor(ProceedingJoinPoint p) throws Throwable{
-        System.out.println("interceptor1~~~~");
-        Object ret = p.proceed();
-        System.out.println("interceptor2~~~~");
-        return ret;
-    }
+//    @Around("pc()") //环绕通知
+//    public Object myInterceptor(ProceedingJoinPoint p) throws Throwable{
+//        System.out.println("interceptor1~~~~");
+//        Object ret = p.proceed();
+//        System.out.println("interceptor2~~~~");
+//        return ret;
+//    }
 
     //将异常存储到ex中
     @AfterThrowing(value = "pc()", throwing = "ex") //异常通知

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service("userService")
@@ -40,10 +41,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Integer deleteUser(Integer id){
+    public Integer deleteUser(Integer id) throws SQLException {
         Integer i = userDAO.deleteUser(id);
         //制造运行时异常事故
-        //int a = 10/0;
+        int a = 10/0;
 
         //制造非运行时异常事故
 //        if(1 == 1){
