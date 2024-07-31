@@ -7,18 +7,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("redir")
 public class RedirectController {
 
+    //http://localhost:8080/redir/test1
     @RequestMapping("/test1")
-    public  String testRedirect1(){
+    public  String test1(){
         System.out.println("test redirect1");
-        //重定向到 /redir/test1
-        //return "redirect:test1" //相对路径（转发到本类中的test1）
-        return "redirect:/redir/test1";//绝对路径
+        //重定向到
+        return "redirect:/redir/users.jsp";//绝对路径
     }
 
+    //http://localhost:8080/redir/test2
     @RequestMapping("/test2")
-    public String testRedirect2(){
+    public String test2(){
         System.out.println("test redirect2");
-        //重定向到 /views/users.jsp
-        return "redirect:/views/users.jsp";
+        //重定向到 /redir/test1
+        //return "redirect:test1" //相对路径（转发到本类中的test1）
+        return "redirect:test1";
     }
 }

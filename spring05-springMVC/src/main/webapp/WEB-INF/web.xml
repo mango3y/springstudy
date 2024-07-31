@@ -41,4 +41,42 @@
     <filter-name>encoding</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+
+  <!--验证码Servlet-->
+  <!-- http://localhost:8080/captcha -->
+  <servlet>
+    <servlet-name>cap</servlet-name>
+    <servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
+    <!--是否需要边框-->
+    <init-param>
+      <param-name>kaptcha.border</param-name>
+      <param-value>no</param-value>
+    </init-param>
+    <!--验证码位数-->
+    <init-param>
+      <param-name>kaptcha.textproducer.char.length</param-name>
+      <param-value>4</param-value>
+    </init-param>
+    <!--验证码中可能出现的字符-->
+    <init-param>
+      <param-name>kaptcha.textproducer.char.string</param-name>
+      <param-value>abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</param-value>
+    </init-param>
+    <!--验证码图片的底色-->
+    <init-param>
+      <param-name>kaptcha.background.clear.to</param-name>
+      <param-value>211,229,237</param-value>
+    </init-param>
+    <!---->
+    <init-param>
+      <!--相当于session.setAttribute("captcha", "生成的验证码")-->
+      <!--在handler中也可以通过session和属性名captcha获得验证码-->
+      <param-name>kaptcha.session.key</param-name>
+      <param-value>captcha</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>cap</servlet-name>
+    <url-pattern>/captcha</url-pattern>
+  </servlet-mapping>
 </web-app>
